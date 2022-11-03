@@ -4,9 +4,9 @@ import socket
 path = os.getcwd()
 sys.path.insert(0, path)
 if sys.version_info[0] >= 3:
-    from lib.httplib2 import py3 as httplib2
+    from lib import py3 as httplib2
 else:
-    from lib.httplib2 import py2 as httplib2
+    from lib import py2 as httplib2
 
 
 def http_Resp(lst_urls):
