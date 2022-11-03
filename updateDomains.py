@@ -42,14 +42,9 @@ if __name__ == '__main__':
     with open(fileJson) as f:
         data = json.load(f)
 
-    chList = os.listdir('channels')
-
+    
     for k in data.keys():
         for chann, host in sorted(data[k].items()):
-            if chann + '.json' not in chList:
-                print(chann + ' not exists anymore')
-                del data[k][chann]
-                continue
             if k == 'findhost':
                 continue
             # to get an idea of the timing
