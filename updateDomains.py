@@ -43,10 +43,8 @@ if __name__ == '__main__':
         data = json.load(f)
 
     
-    for k in data.keys():
-        for chann, host in sorted(data[k].items()):
-            if k == 'findhost':
-                continue
+    for chann, host in sorted(data.items()):
+            
             # to get an idea of the timing
             # useful only if you control all channels
             # for channels with error 522 about 40 seconds are lost ...
@@ -56,11 +54,11 @@ if __name__ == '__main__':
 
             # all right
             if rslt['code'] == 200:
-                data[k][chann] = host
+                data[chann] = host
             # redirect
             elif str(rslt['code']).startswith('3'):
                 # data[k][chann] = str(rslt['code']) +' - '+ rslt['redirect'][:-1]
-                data[k][chann] = rslt['redirect']
+                data[chann] = rslt['redirect']
             # cloudflare...
             elif rslt['code'] in [429, 503, 403]:
                 from lib import proxytranslate
@@ -69,7 +67,7 @@ if __name__ == '__main__':
                 print('Cloudflare riconosciuto')
                 try:
                     page_data = proxytranslate.process_request_proxy(host).get('data', '')
-                    data[k][chann] = re.search('<base href="([^"]+)', page_data).group(1)
+                    data[chann] = re.search('<base href="([^"]+)', page_data).group(1)
                     rslt['code_new'] = 200
                 except Exception as e:
                     import traceback
@@ -85,8 +83,8 @@ if __name__ == '__main__':
                 print('Errore Sconosciuto - '+str(rslt['code']) +' - '+ host)
 
             print("check #### FINE #### rslt :%s  " % (rslt))
-            if data[k][chann].endswith('/'):
-                data[k][chann] = data[k][chann][:-1]
+            if data[chann].endswith('/'):
+                data[chann] = data[chann][:-1]
 
     # I write the updated file
     with open(fileJson, 'w') as f:
