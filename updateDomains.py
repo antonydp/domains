@@ -5,14 +5,8 @@ import undetected_chromedriver as uc
 from lib import proxytranslate
 from pyvirtualdisplay import Display
 display = Display(visible=0, size=(800, 800))  
-display.start()
-
-chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
-                                      # and if it doesn't exist, download it automatically,
-                                      # then add chromedriver to path
-
+display.start() 
 driver = uc.Chrome()
-
 
 if __name__ == '__main__':
     fileJson = 'channels.json'
