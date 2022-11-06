@@ -8,12 +8,13 @@ display = Display(visible=0, size=(800, 800))
 display.start() 
 from selenium import webdriver
 
-options = webdriver.ChromeOptions() 
-options.add_argument("--no-sandbox")
-options.add_argument("start-maximized")
-chrome = uc.Chrome(options=options)
-
 if __name__ == '__main__':
+    
+    options = webdriver.ChromeOptions() 
+    options.add_argument("--no-sandbox")
+    options.add_argument("start-maximized")
+    chrome = uc.Chrome(options=options)
+
     fileJson = 'channels.json'
 
     with open(fileJson) as f:
