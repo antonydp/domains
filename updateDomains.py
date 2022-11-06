@@ -20,9 +20,9 @@ if __name__ == '__main__':
 
     
     for chann, host in sorted(data.items()):
-            driver.get(host)
-            data[chann] = driver.current_url
-            print(driver.current_url)
+            chrome.get(host)
+            data[chann] = chrome.current_url
+            print(chrome.current_url)
 
     # I write the updated file
     with open(fileJson, 'w') as f:
