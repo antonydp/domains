@@ -15,9 +15,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
-
-    - name: Install dependencies
-      run: pip install requests
     
     - name: Installing package list
       run: apt list --installed    
@@ -26,7 +23,7 @@ jobs:
       run: sudo apt purge google-chrome-stable  
       
     - name: Installing all necessary packages
-      run: pip install chromedriver-autoinstaller selenium pyvirtualdisplay
+      run: pip install undetected_chromedriver pyvirtualdisplay
       
     - name: Install xvfb
       run: sudo apt-get install xvfb
