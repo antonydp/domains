@@ -66,23 +66,15 @@ if __name__ == '__main__':
                 # data[k][chann] = str(rslt['code']) +' - '+ rslt['redirect'][:-1]
                 data[chann] = rslt['redirect']
             # cloudflare...
-            #else:
-            #    # other types of errors
-            #    driver.get(host)
-            #    time.sleep(7)
-            #    data[chann] = driver.current_url
+
             elif rslt['code'] in [429, 503, 403]:
                 from lib import proxytranslate
                 import re
 
                 print('Cloudflare riconosciuto')
-                try:
-                    page_data = proxytranslate.process_request_proxy(host).get('data', '')
-                    data[chann] = re.search('<base href="([^"]+)', page_data).group(1)
-                    rslt['code_new'] = 200
-                except Exception as e:
-                    import traceback
-                    traceback.print_exc()
+                driver.get(host)
+                time.sleep(5)
+                data[chann] = driver.current_url
             # non-existent site
             elif rslt['code'] == -2:
                 print('Host Sconosciuto - '+ str(rslt['code']) +' - '+ host)
