@@ -6,10 +6,10 @@ from lib import proxytranslate
 from pyvirtualdisplay import Display
 display = Display(visible=0, size=(800, 800))  
 display.start() 
+from selenium import webdriver
 
-options = uc.ChromeOptions()
-options.headless=True
-options.add_argument('--headless')
+options = webdriver.ChromeOptions() 
+options.add_argument("start-maximized")
 chrome = uc.Chrome(options=options)
 
 if __name__ == '__main__':
