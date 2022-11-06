@@ -20,7 +20,7 @@ def http_Resp(lst_urls):
             code, resp = s.request(sito, body=None)
             if code.previous:
                 rslt['code'] = code.previous['status']
-                rslt['redirect'] = code.get('content-location', sito)
+                rslt['redirect'] = code.previous.get("location")
                 rslt['status'] = code.status
                 print("r1 http_Resp: %s %s %s %s" %
                       (code.status, code.reason, rslt['code'], rslt['redirect']))
