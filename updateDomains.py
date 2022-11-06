@@ -9,6 +9,7 @@ display.start()
 from selenium import webdriver
 
 options = webdriver.ChromeOptions() 
+options.add_argument("--no-sandbox")
 options.add_argument("start-maximized")
 chrome = uc.Chrome(options=options)
 
