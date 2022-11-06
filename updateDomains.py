@@ -6,7 +6,11 @@ from lib import proxytranslate
 from pyvirtualdisplay import Display
 display = Display(visible=0, size=(800, 800))  
 display.start() 
-driver = uc.Chrome(headless=False, use_subprocess=True)
+
+options = uc.ChromeOptions()
+options.headless=True
+options.add_argument('--headless')
+chrome = uc.Chrome(options=options)
 
 if __name__ == '__main__':
     fileJson = 'channels.json'
