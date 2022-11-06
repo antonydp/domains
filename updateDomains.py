@@ -1,6 +1,43 @@
 import json, os, sys
 import socket
+import re
+from lib import proxytranslate
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+import chromedriver_autoinstaller
+from pyvirtualdisplay import Display
+display = Display(visible=0, size=(800, 800))  
+display.start()
 
+chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
+                                      # and if it doesn't exist, download it automatically,
+                                      # then add chromedriver to path
+
+chrome_options = webdriver.ChromeOptions()    
+# Add your options as needed    
+options = [
+  # Define window size here
+   "--window-size=1200,1200",
+    "--ignore-certificate-errors"
+ 
+    #"--headless",
+    #"--disable-gpu",
+    #"--window-size=1920,1200",
+    #"--ignore-certificate-errors",
+    #"--disable-extensions",
+    #"--no-sandbox",
+    #"--disable-dev-shm-usage",
+    #'--remote-debugging-port=9222'
+]
+
+for option in options:
+    chrome_options.add_argument(option)
+
+    
+driver = webdriver.Chrome(options = chrome_options)
+
+                
 path = os.getcwd()
 sys.path.insert(0, path)
 if sys.version_info[0] >= 3:
@@ -17,7 +54,7 @@ def http_Resp(lst_urls):
             code, resp = s.request(sito, body=None)
             if code.previous:
                 rslt['code'] = code.previous['status']
-                rslt['redirect'] = code.get('content-location', sito)
+                rslt['redirect'] = code.previous.get("location")
                 rslt['status'] = code.status
                 print("r1 http_Resp: %s %s %s %s" %
                       (code.status, code.reason, rslt['code'], rslt['redirect']))
@@ -44,7 +81,6 @@ if __name__ == '__main__':
 
     
     for chann, host in sorted(data.items()):
-            
             # to get an idea of the timing
             # useful only if you control all channels
             # for channels with error 522 about 40 seconds are lost ...
@@ -61,11 +97,10 @@ if __name__ == '__main__':
                 data[chann] = rslt['redirect']
             # cloudflare...
             elif rslt['code'] in [429, 503, 403]:
-                from lib import proxytranslate
-                import re
-
                 print('Cloudflare riconosciuto')
                 try:
+                    a = re.search('<base href="([^"]+)', proxytranslate.process_request_proxy(host).get('data', '')).group(1)
+                    print("dw" + a)
                     page_data = proxytranslate.process_request_proxy(host).get('data', '')
                     data[chann] = re.search('<base href="([^"]+)', page_data).group(1)
                     rslt['code_new'] = 200
@@ -77,12 +112,14 @@ if __name__ == '__main__':
                 print('Host Sconosciuto - '+ str(rslt['code']) +' - '+ host)
             # site not reachable
             elif rslt['code'] == 111:
-                print('Host non raggiungibile - '+ str(rslt['code']) +' - ' + host)
+                driver.get(host)
+                data[chann] = driver.current_url
             else:
                 # other types of errors
                 print('Errore Sconosciuto - '+str(rslt['code']) +' - '+ host)
 
             print("check #### FINE #### rslt :%s  " % (rslt))
+            print(data[chann])
             if data[chann].endswith('/'):
                 data[chann] = data[chann][:-1]
 
