@@ -2,6 +2,7 @@ import json, os, sys
 import socket
 import re
 import undetected_chromedriver as uc
+import time
 from lib import proxytranslate
 from pyvirtualdisplay import Display
 from selenium import webdriver 
@@ -21,6 +22,7 @@ if __name__ == '__main__':
 
     for chann, host in sorted(data.items()):
         driver.get(host)
+        time.sleep(7)
         data[chann] = driver.current_url
         print(driver.current_url)
 
