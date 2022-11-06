@@ -1,20 +1,12 @@
-import json, os, sys
-import socket
-import re
+import json
 import undetected_chromedriver as uc
-import time
-from lib import proxytranslate
-from pyvirtualdisplay import Display
-from selenium import webdriver 
+import time 
+from pyvirtualdisplay import Display 
 
 if __name__ == '__main__':
-    
     display = Display(visible=0, size=(800, 800))  
-    display.start() 
-    options = uc.ChromeOptions()
-    options.headless=True
-    options.add_argument('--headless')
-    driver = uc.Chrome(options=options) 
+    display.start()  
+    driver = uc.Chrome() 
     fileJson = 'channels.json'
 
     with open(fileJson) as f:
