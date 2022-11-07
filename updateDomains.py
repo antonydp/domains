@@ -50,10 +50,6 @@ if __name__ == '__main__':
 
     
     for chann, host in sorted(data.items()):
-            
-            # to get an idea of the timing
-            # useful only if you control all channels
-            # for channels with error 522 about 40 seconds are lost ...
             print("check #### INIZIO #### channel - host :%s - %s " % (chann, host))
 
             rslt = http_Resp([host])
@@ -66,11 +62,7 @@ if __name__ == '__main__':
                 # data[k][chann] = str(rslt['code']) +' - '+ rslt['redirect'][:-1]
                 data[chann] = rslt['redirect']
             # cloudflare...
-
             elif rslt['code'] in [429, 503, 403]:
-                from lib import proxytranslate
-                import re
-
                 print('Cloudflare riconosciuto')
                 driver.get(host)
                 time.sleep(5)
