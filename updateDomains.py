@@ -91,7 +91,7 @@ if __name__ == '__main__':
             if data[chann].startswith("https://www."):
                 data[chann] = "https://"+data[chann][12:]
             if data[chann].startswith("http://www."):
-                data[chann] = "http://"+data[chann][11:]
+                data[chann] = "https://"+data[chann][11:]
 
     # I write the updated file
     with open(fileJson, 'w') as f:
