@@ -1,5 +1,13 @@
-# Byte-compiled / optimized / DLL files
+*.pyo
+*.pyc
+.DS_Store
+.idea/
+.directory
+custom_code.json
+last_commit.txt
 __pycache__/
-lib/py3/__pycache__/
-*.py[cod]
-*$py.class
+.vscode/settings.json
+bin/
+lib/abi
+tests/home/
+reports/
