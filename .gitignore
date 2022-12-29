@@ -1,2 +1,8 @@
+*.pyo
 *.pyc
+.DS_Store
+.idea/
+.directory
 __pycache__/
+bin/
+lib/
